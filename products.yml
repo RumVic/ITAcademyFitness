@@ -160,8 +160,8 @@ components:
               value:
                 logref: structured_error
                 errors:
-                  - field: time_unit
-                    message: Поле должно быть положительным числом
+                  - field: title
+                    message: Поле не может быть пустым
     Unauthorized:
       description: Для выполнения запроса на данный адрес требуется передать токен авторизации
     Forbidden:
