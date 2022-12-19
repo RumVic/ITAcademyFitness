@@ -133,7 +133,7 @@ paths:
         $ref: "#/components/requestBodies/CreateJournalFood"
       responses:
         '201':
-          description: Блюдо добавлено в справочник
+          description: Запись в дневник добавлена
         '400':
           $ref: '#/components/responses/Bad_Request'
         '401':
