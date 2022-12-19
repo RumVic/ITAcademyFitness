@@ -81,7 +81,7 @@ paths:
         $ref: "#/components/requestBodies/CreateDish"
       responses:
         '201':
-          description: Продукт добавлен в справочник
+          description: Блюдо добавлено в справочник
         '400':
           $ref: '#/components/responses/Bad_Request'
         '401':
