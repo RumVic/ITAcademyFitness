@@ -155,7 +155,7 @@ components:
             t_single_error_response:
               value:
                 - logref: error
-                  message:  Запрос содержит некорретные данные. Измените запрос и отправьте его ещё раз
+                  message:  Запрос содержит некорректные данные. Измените запрос и отправьте его ещё раз
             t_multiple_error_response:
               value:
                 logref: structured_error
@@ -165,7 +165,7 @@ components:
     Unauthorized:
       description: Для выполнения запроса на данный адрес требуется передать токен авторизации
     Forbidden:
-      description: Данному токенту авторизации запрещено выполнять запроса на данный адрес
+      description: Данному токену авторизации запрещено выполнять запроса на данный адрес
     Internal_Server_Error:
       description: Внутренняя ошибка сервера. Сервер не смог корректно обработать запрос
       content:
@@ -328,7 +328,7 @@ components:
         message:
           description: Сообщение ошибки
           type: string
-          example: Запрос содержит некорретные данные. Измените запрос и отправьте его ещё раз
+          example: Запрос содержит некорректные данные. Измените запрос и отправьте его ещё раз
 
     t_multiple_error_response:
       type: object
@@ -349,8 +349,8 @@ components:
               message:
                 type: string
                 description: Сообщение об ошибке
-                example: Поле должно быть положительным числом
+                example: Поле не может быть пустым
               field:
                 type: string
                 description: Наименование ошибочного поля
-                example: time_unit
+                example: title
