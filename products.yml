@@ -74,13 +74,13 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/Internal_Server_Error'
-  /api/dish:
+  /api/recipe:
     post:
       tags:
         - "Справочники"
-      summary: Добавление нового блюда
+      summary: Добавление нового рецепта блюда
       requestBody:
-        $ref: "#/components/requestBodies/CreateDish"
+        $ref: "#/components/requestBodies/CreateRecipe"
       responses:
         '201':
           description: Блюдо добавлено в справочник
@@ -95,7 +95,7 @@ paths:
     get:
       tags:
         - "Справочники"
-      summary: Получить страницу блюда
+      summary: Получить страницу рецептов блюд
       parameters:
         - in: query
           name: page
@@ -184,15 +184,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Product'
-    CreateDish:
-      description: Тело для блюда
+    CreateRecipe:
+      description: Тело для рецепта блюда
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Dish'
+            $ref: '#/components/schemas/Recipe'
     CreateJournalFood:
-      description: Тело для блюда
+      description: Тело для записи в журнале питания
       required: true
       content:
         application/json:
@@ -271,8 +271,8 @@ components:
           format: double
           description: "Углеводы"
           example: 57.1
-    Dish:
-      description: Блюдо
+    Recipe:
+      description: Рецепт блюда
       allOf:
         - $ref: '#/components/schemas/t_base_essence'
       properties:
@@ -302,8 +302,8 @@ components:
           format: int64
           description: "Дата и время приёма еды (linux time) (вводит пользователь)"
           example: 1671465055782
-        dish:
-          $ref: '#/components/schemas/Dish'
+        recipe:
+          $ref: '#/components/schemas/Recipe'
         product:
           $ref: '#/components/schemas/Product'
         weight:
@@ -331,7 +331,7 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/Dish'
+            $ref: '#/components/schemas/Recipe'
     PageOfJournalFood:
       type: object
       description: Страница дневника питания
