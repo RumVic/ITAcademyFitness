@@ -72,6 +72,56 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/Internal_Server_Error'
+  /api/dish:
+    post:
+      tags:
+        - "Справочники"
+      summary: Добавление нового блюда
+      requestBody:
+        $ref: "#/components/requestBodies/CreateDish"
+      responses:
+        '201':
+          description: Продукт добавлен в справочник
+        '400':
+          $ref: '#/components/responses/Bad_Request'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/Internal_Server_Error'
+    get:
+      tags:
+        - "Справочники"
+      summary: Получить страницу блюда
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Номер страницы
+          required: false
+        - in: query
+          name: size
+          schema:
+            type: integer
+          description: Размер страницы
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageOfDish'
+        '400':
+          $ref: '#/components/responses/Bad_Request'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/Internal_Server_Error'
 
 components:
   requestBodies:
@@ -82,6 +132,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Product'
+    CreateDish:
+      description: Тело для блюда
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Dish'
 
   responses:
     Bad_Request:
@@ -155,6 +212,27 @@ components:
           format: double
           description: "Углеводы"
           example: 57.1
+    Dish:
+      description: Блюдо
+      allOf:
+        - $ref: '#/components/schemas/t_base_essence'
+      properties:
+        title:
+          type: string
+          description: "Название"
+          example: "Гречка"
+        composition:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                $ref: '#/components/schemas/Product'
+              weight:
+                type: integer
+                format: int32
+                description: "Вес продукта добавленного в блюдо в граммах\\миллилитрах"
+                example: 100
 
     PageOfProduct:
       type: object
@@ -166,7 +244,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Product'
-    
+    PageOfDish:
+      type: object
+      description: Страница с продуктами
+      allOf:
+        - $ref: '#/components/schemas/t_page'
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dish'
+
     t_base_essence:
       type: object
       description: Описание базовой сущности.
