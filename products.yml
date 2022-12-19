@@ -324,7 +324,7 @@ components:
             $ref: '#/components/schemas/Product'
     PageOfDish:
       type: object
-      description: Страница с продуктами
+      description: Страница с блюдами
       allOf:
         - $ref: '#/components/schemas/t_page'
       properties:
