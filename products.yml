@@ -190,14 +190,29 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Recipe'
+            $ref: '#/components/schemas/RecipeForCU'
     CreateJournalFood:
       description: Тело для записи в журнале питания
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/JournalFood'
+            oneOf:
+              - $ref: '#/components/schemas/JournalFoodForCUWithRecipe'
+              - $ref: '#/components/schemas/JournalFoodForCUWithProduct'
+          examples:
+            JournalFoodForCUWithRecipe:
+              value:
+                dt_supply: 1671465055782
+                recipe:
+                  uuid: "74c545f4-56a9-4045-be95-519b1bffa0c1"
+                weight: 177
+            JournalFoodForCUWithProduct:
+              value:
+                dt_supply: 1671465055782
+                product:
+                  uuid: "83f5041a-d0a2-404d-ad6a-443c822b20ee"
+                weight: 300
 
   responses:
     Bad_Request:
@@ -279,7 +294,7 @@ components:
         title:
           type: string
           description: "Название"
-          example: "Гречка"
+          example: "Гречка с лисичками"
         composition:
           type: array
           items:
@@ -306,6 +321,59 @@ components:
           $ref: '#/components/schemas/Recipe'
         product:
           $ref: '#/components/schemas/Product'
+        weight:
+          type: integer
+          format: int32
+          description: "Вес который съел пользователь в граммах\\миллилитрах"
+          example: 100
+    RecipeForCU:
+      description: Рецепт блюда
+      properties:
+        title:
+          type: string
+          description: "Название"
+          example: "Гречка с лисичками"
+        composition:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                $ref: "#/components/schemas/t_base_reference"
+              weight:
+                type: integer
+                format: int32
+                description: "Вес продукта добавленного в блюдо в граммах\\миллилитрах"
+                example: 100
+    JournalFoodForCUWithProduct:
+      description: Запись в дневнике питания
+      allOf:
+        - $ref: '#/components/schemas/t_base_essence'
+      properties:
+        dt_supply:
+          type: integer
+          format: int64
+          description: "Дата и время приёма еды (linux time) (вводит пользователь)"
+          example: 1671465055782
+        product:
+          $ref: '#/components/schemas/t_base_reference'
+        weight:
+          type: integer
+          format: int32
+          description: "Вес который съел пользователь в граммах\\миллилитрах"
+          example: 100
+    JournalFoodForCUWithRecipe:
+      description: Запись в дневнике питания
+      allOf:
+        - $ref: '#/components/schemas/t_base_essence'
+      properties:
+        dt_supply:
+          type: integer
+          format: int64
+          description: "Дата и время приёма еды (linux time) (вводит пользователь)"
+          example: 1671465055782
+        recipe:
+          $ref: '#/components/schemas/t_base_reference'
         weight:
           type: integer
           format: int32
@@ -343,6 +411,14 @@ components:
           items:
             $ref: '#/components/schemas/JournalFood'
 
+    t_base_reference:
+      type: object
+      description: "Ссылка на существующий объект в системе"
+      properties:
+        uuid:
+          description: "Идентификатор объекта"
+          type: string
+          format: uuid
     t_base_essence:
       type: object
       description: Описание базовой сущности.
