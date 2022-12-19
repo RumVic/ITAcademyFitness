@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Сервис афиши
+  title: Сервис журнала питания
   contact:
     name: ITAcademy
     url: http://it-academy.by
