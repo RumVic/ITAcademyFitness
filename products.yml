@@ -24,7 +24,7 @@ tags:
     description: "Дневники заполняемые пользователем"
 
 paths:
-  /api/product:
+  /api/v1/product:
     post:
       tags:
         - "Справочники"
@@ -74,7 +74,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/Internal_Server_Error'
-  /api/recipe:
+  /api/v1/recipe:
     post:
       tags:
         - "Справочники"
@@ -124,7 +124,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/Internal_Server_Error'
-  /api/journal/food:
+  /api/v1/journal/food:
     post:
       tags:
         - "Дневники"
