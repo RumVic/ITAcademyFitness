@@ -74,6 +74,39 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/Internal_Server_Error'
+  /api/v1/product/{uuid}/dt_update/{dt_update}:
+    put:
+      tags:
+        - "Справочники"
+      summary: Редактировать информацию о продукте
+      parameters:
+        - in: path
+          name: uuid
+          description: Идентификатор продукта которое изменяем
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: path
+          name: dt_update
+          required: true
+          schema:
+            type: string
+            format: int64
+          description: Дата последнего известного обновления записи
+      requestBody:
+        $ref: "#/components/requestBodies/CreateProduct"
+      responses:
+        '200':
+          description: "Продукт обновлён"
+        '400':
+          $ref: '#/components/responses/Bad_Request'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/Internal_Server_Error'
   /api/v1/recipe:
     post:
       tags:
@@ -116,6 +149,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PageOfDish'
+        '400':
+          $ref: '#/components/responses/Bad_Request'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/Internal_Server_Error'
+  /api/v1/recipe/{uuid}/dt_update/{dt_update}:
+    put:
+      tags:
+        - "Справочники"
+      summary: Редактировать информацию о рецепте
+      parameters:
+        - in: path
+          name: uuid
+          description: Идентификатор рецепта которое изменяем
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: path
+          name: dt_update
+          required: true
+          schema:
+            type: string
+            format: int64
+          description: Дата последнего известного обновления записи
+      requestBody:
+        $ref: "#/components/requestBodies/CreateRecipe"
+      responses:
+        '200':
+          description: "Продукт обновлён"
         '400':
           $ref: '#/components/responses/Bad_Request'
         '401':
