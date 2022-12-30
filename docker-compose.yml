@@ -9,9 +9,17 @@ services:
       POSTGRES_PASSWORD: root
     networks:
       - fitness_ntwrk
+  db_2:
+    image: fitness_postgresql:1.0.0
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    networks:
+      - fitness_ntwrk
   pgadmin:
     build: pgadmin
-    image: fitness_pgadmin:1.0.0
+    image: fitness_pgadmin:1.0.1
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
@@ -30,24 +38,24 @@ services:
 
   product-service:
     build: product-service
-    image: fitness_user-service:1.0.0
+    image: fitness_user-service:1.0.1
     networks:
       - fitness_ntwrk
-  user-service:
-    build: user-service
-    image: fitness_user-service:1.0.0
-    networks:
-      - fitness_ntwrk
+#  user-service:
+#    build: user-service
+#    image: fitness_user-service:1.0.0
+#    networks:
+#      - fitness_ntwrk
   audit-service:
     build: audit-service
     image: fitness_audit-service:1.0.0
     networks:
       - fitness_ntwrk
-  report-service:
-    build: report-service
-    image: fitness_report-service:1.0.0
-    networks:
-      - fitness_ntwrk
+#  report-service:
+#    build: report-service
+#    image: fitness_report-service:1.0.0
+#    networks:
+#      - fitness_ntwrk
 
   proxy:
     build: proxy
