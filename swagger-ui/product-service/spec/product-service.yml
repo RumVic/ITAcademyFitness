@@ -373,6 +373,61 @@ components:
                 format: int32
                 description: "Вес продукта добавленного в блюдо в граммах\\миллилитрах"
                 example: 100
+    User:
+      type: object
+      description: Пользователь
+      allOf:
+        - $ref: '#/components/schemas/t_base_essence'
+    ProfileSex:
+      type: string
+      description: |
+        Пол профиля:
+          * `MALE` - Мужской
+          * `FEMALE` - Женский
+      enum:
+        - "MALE"
+        - "FEMALE"
+    ActivityType:
+      type: string
+      description: |
+        Пол профиля:
+          * `ACTIVE` - Активный
+          * `NOT_ACTIVE` - Не активный
+      enum:
+        - "ACTIVE"
+        - "NOT_ACTIVE"
+    Profile:
+      description: Профиль пользователя
+      allOf:
+        - $ref: '#/components/schemas/t_base_essence'
+      properties:
+        height:
+          type: integer
+          format: int32
+          description: "Рост"
+          example: 173
+        weight:
+          type: number
+          format: double
+          description: "Вес"
+          example: 105.3
+        dt_birthday:
+          type: string
+          format: date
+          description: "Дата рождения"
+          example: "1993-07-01"
+        target:
+          type: number
+          format: double
+          description: "Целевой вес"
+          example: 85.9
+        activity_type:
+          $ref: '#/components/schemas/ActivityType'
+        sex:
+          $ref: '#/components/schemas/ProfileSex'
+        user:
+          $ref: '#/components/schemas/User'
+
     JournalFood:
       description: Запись в дневнике питания
       allOf:
@@ -413,8 +468,6 @@ components:
                 example: 100
     JournalFoodForCUWithProduct:
       description: Запись в дневнике питания
-      allOf:
-        - $ref: '#/components/schemas/t_base_essence'
       properties:
         dt_supply:
           type: integer
@@ -430,8 +483,6 @@ components:
           example: 100
     JournalFoodForCUWithRecipe:
       description: Запись в дневнике питания
-      allOf:
-        - $ref: '#/components/schemas/t_base_essence'
       properties:
         dt_supply:
           type: integer
@@ -445,6 +496,33 @@ components:
           format: int32
           description: "Вес который съел пользователь в граммах\\миллилитрах"
           example: 100
+    ProfileForCU:
+      description: Профиль пользователя
+      properties:
+        height:
+          type: integer
+          format: int32
+          description: "Рост"
+          example: 173
+        weight:
+          type: number
+          format: double
+          description: "Вес"
+          example: 105.3
+        dt_birthday:
+          type: string
+          format: date
+          description: "Дата рождения"
+          example: "1993-07-01"
+        target:
+          type: number
+          format: double
+          description: "Целевой вес"
+          example: 85.9
+        activity_type:
+          $ref: '#/components/schemas/ActivityType'
+        sex:
+          $ref: '#/components/schemas/ProfileSex'
 
     PageOfProduct:
       type: object
