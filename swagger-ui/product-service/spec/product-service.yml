@@ -29,6 +29,8 @@ paths:
       tags:
         - "Справочники"
       summary: Добавление нового продукта
+      security:
+        - bearerAuth: [ ]
       requestBody:
         $ref: "#/components/requestBodies/CreateProduct"
       responses:
@@ -79,6 +81,8 @@ paths:
       tags:
         - "Справочники"
       summary: Редактировать информацию о продукте
+      security:
+        - bearerAuth: [ ]
       parameters:
         - in: path
           name: uuid
@@ -112,6 +116,8 @@ paths:
       tags:
         - "Справочники"
       summary: Добавление нового рецепта блюда
+      security:
+        - bearerAuth: [ ]
       requestBody:
         $ref: "#/components/requestBodies/CreateRecipe"
       responses:
@@ -129,6 +135,8 @@ paths:
       tags:
         - "Справочники"
       summary: Получить страницу рецептов блюд
+      security:
+        - bearerAuth: []
       parameters:
         - in: query
           name: page
@@ -162,6 +170,8 @@ paths:
       tags:
         - "Справочники"
       summary: Редактировать информацию о рецепте
+      security:
+        - bearerAuth: [ ]
       parameters:
         - in: path
           name: uuid
@@ -190,11 +200,71 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/Internal_Server_Error'
-  /api/v1/journal/food:
+  /api/v1/profile:
     post:
+      tags:
+        - "Профиль"
+      summary: Добавление нового профиля
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        $ref: "#/components/requestBodies/CreateProfile"
+      responses:
+        '201':
+          description: Запись в дневник добавлена
+        '400':
+          $ref: '#/components/responses/Bad_Request'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/Internal_Server_Error'
+  /api/v1/profile/{uuid_profile}:
+    get:
+      tags:
+        - "Профиль"
+      summary: Получение профиля
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - in: path
+          name: uuid_profile
+          schema:
+            type: string
+            format: uuid
+          description: uuid профиля
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '400':
+          $ref: '#/components/responses/Bad_Request'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/Internal_Server_Error'
+  /api/v1/profile/{uuid_profile}/journal/food:
+    post:
+      parameters:
+        - in: path
+          name: uuid_profile
+          schema:
+            type: string
+            format: uuid
+          description: uuid профиля
+          required: true
       tags:
         - "Дневники"
       summary: Добавление новой записи в дневник питания
+      security:
+        - bearerAuth: [ ]
       requestBody:
         $ref: "#/components/requestBodies/CreateJournalFood"
       responses:
@@ -212,7 +282,16 @@ paths:
       tags:
         - "Дневники"
       summary: Получить страницу из дневника питания
+      security:
+        - bearerAuth: [ ]
       parameters:
+        - in: path
+          name: uuid_profile
+          schema:
+            type: string
+            format: uuid
+          description: uuid профиля
+          required: true
         - in: query
           name: page
           schema:
@@ -242,6 +321,13 @@ paths:
           $ref: '#/components/responses/Internal_Server_Error'
 
 components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   requestBodies:
     CreateProduct:
       description: Тело для продукта
@@ -257,6 +343,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RecipeForCU'
+    CreateProfile:
+      description: Тело для создания профиля
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProfileForCU'
     CreateJournalFood:
       description: Тело для записи в журнале питания
       required: true
