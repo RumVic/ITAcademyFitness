@@ -211,7 +211,7 @@ paths:
         $ref: "#/components/requestBodies/CreateProfile"
       responses:
         '201':
-          description: Запись в дневник добавлена
+          description: Профиль создан
         '400':
           $ref: '#/components/responses/Bad_Request'
         '401':
