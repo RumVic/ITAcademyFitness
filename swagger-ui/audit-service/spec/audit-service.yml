@@ -70,7 +70,7 @@ paths:
       parameters:
         - in: path
           name: uuid
-          description: "Идентификатор пользователя"
+          description: "Идентификатор действия"
           required: true
           schema:
             type: string
