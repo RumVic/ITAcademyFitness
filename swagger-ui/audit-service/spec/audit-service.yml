@@ -182,12 +182,14 @@ components:
           * `USER` - Пользователь
           * `JOURNAL_FOOD` - Журнал питания
           * `REPORT` - Отчёт
+          * `PROFILE` - Профиль
       enum:
         - "PRODUCT"
         - "RECIPE"
         - "USER"
         - "JOURNAL_FOOD"
         - "REPORT"
+        - "PROFILE"
     Audit:
       type: object
       description: Информация о действии в системе
